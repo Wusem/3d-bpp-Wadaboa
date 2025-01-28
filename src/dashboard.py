@@ -8,7 +8,7 @@ import config, dataset, main, utils
 
 
 # Matplotlib params
-plt.style.use("seaborn")
+plt.style.use("seaborn-v0_8")
 plt.rcParams["figure.dpi"] = 300
 
 

@@ -1,5 +1,4 @@
 import copy
-
 import numpy as np
 import pandas as pd
 from loguru import logger
@@ -579,7 +578,7 @@ class LayerPool:
         """
         Return a DataFrame with stats about the current layer pool
         """
-        ids = list(range(len(self.layers)))
+        ids = [str(i) for i in range(len(self.layers))]  # Convert IDs to strings from the start
         heights = self.get_heights()
         areas = self.get_areas()
         volumes = self.get_volumes()
@@ -589,14 +588,15 @@ class LayerPool:
             zip(ids, heights, areas, volumes, densities_2d, densities_3d),
             columns=["layer", "height", "area", "volume", "2d_density", "3d_density"],
         )
+        df["layer"] = df["layer"].astype(str)  # Ensure layer column is string type
         total = (
             df.agg(
                 {
-                    "height": np.sum,
-                    "area": np.sum,
-                    "volume": np.sum,
-                    "2d_density": np.mean,
-                    "3d_density": np.mean,
+                    "height": "sum",
+                    "area": "sum",
+                    "volume": "sum",
+                    "2d_density": "mean",
+                    "3d_density": "mean",
                 }
             )
             .to_frame()
